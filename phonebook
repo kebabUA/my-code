@@ -1,0 +1,93 @@
+using namespace std;
+
+
+
+
+
+struct personInfo {
+	string name;
+	string lastName;
+	int telephone;
+	
+	void getInfo() {
+		cout << "Name: ";
+		cin >> name;
+		cout << "LastName: ";
+		cin >> lastName;
+		cout << "Telephone: ";
+		cin >> telephone;
+		cout << endl;
+	}
+
+	void display() {
+		cout << "Name: " << name;
+		cout << endl;
+		cout << "LastName: " << lastName;
+		cout << endl;
+		cout << "Telephone: " << telephone;
+		cout << endl << endl;
+	}
+};
+
+
+int main() {
+	personInfo inform[5];
+
+	while (true) {
+	cout << "Select item:\n" << "1. Add information.\n" << "2. Show all information.\n" << "3. Search by last name.\n" << "4. Search by phone number.\n" << "5. End programm.\n" << "Your choice: ";
+	int choice;
+	cin >> choice;
+	cout << endl;
+	string searchName;
+	switch (choice) {
+	case 1:
+		int addMore;
+
+		for (int i = 0; i < 5; ) {
+			inform[i].getInfo();
+			cout << "Add more?(0-no/1-yes): ";
+			cin >> addMore;
+			cout << endl;
+			if (addMore == 0) break;
+			else if (addMore == 1) i++;
+			else cout << "Not in range.\n";
+		}
+		break;
+	case 2:
+		for (int i = 0; i < 5; i++) {
+			if (inform[i].telephone <= 0) continue;
+			else inform[i].display();
+		}
+		break;
+	case 3:
+		cout << "Last Name: ";
+		cin >> searchName;
+		for (int i = 0; i < 5; i++) {
+			if (searchName == inform[i].lastName) {
+				inform[i].display();
+				cout << endl;
+				break;
+			}
+			if(i==4)cout << "Not found." << endl;
+		};
+		break;
+	case 4:
+		int number;
+		cout << "Phone number: ";
+		cin >> number;
+		for (int i = 0; i < 5; i++) {
+			if (number == inform[i].telephone) { 
+				inform[i].display();
+				break;
+			}
+			else if (i == 4)
+				cout << "Not found." << endl;
+		}
+		break;
+	case 5:return 0; break;
+	default: cout << "Not in range.\n" << endl;
+	}
+	}
+
+
+}
