@@ -1,0 +1,113 @@
+#include <iostream>
+
+using namespace std;
+
+void longMultiplication(long long a, long long b) {
+	long long c;
+
+	if (b > a) { c = b; b = a; a = c; }
+
+	long long copyA = a;
+
+	int arrLength1 = 1;
+
+	while ((copyA /= 10) > 0) arrLength1++;
+
+	int* firstArr = new int[arrLength1];
+
+	for (int i = 0; i < arrLength1; i++) {
+		firstArr[i] = a % 10;
+		a /= 10;
+	}
+
+	long long copyB = b;
+
+	int arrLength2 = 1;
+
+	while ((copyB /= 10) > 0) arrLength2++;
+
+	int* secondArr = new int[arrLength2];
+
+	for (int i = 0; i < arrLength2; i++) {
+		secondArr[i] = b % 10;
+		b /= 10;
+	}
+
+	int* firstString = new int[arrLength1 + arrLength2 + 1];
+	int* endResult = new int[arrLength1 + arrLength2 + 1];
+	int firstResult = 0;
+	int firstConter = 0;
+	int index = 0;
+	int indForLabel = 0;
+
+
+	for (int i = 0; i < (arrLength1 + arrLength2 + 1); i++) {
+		firstString[i] = 0;
+		endResult[i] = 0;
+	}
+
+
+
+	for (int i = 0; i < arrLength2; i++) {
+		for (int j = 0; j < arrLength1; j++) {
+			while (firstString[index] == 333) { index++; }
+			firstResult = firstArr[j] * secondArr[i] + firstConter;
+			int doublenumber = 0;
+			while (j == arrLength1 - 1 && doublenumber < 2) {
+				firstString[index] = firstResult % 10;
+				firstResult /= 10;
+				doublenumber++;
+				index++;
+			}
+			firstConter = 0;
+			while (firstResult >= 10) {
+				firstResult -= 10;
+				firstConter++;
+			}
+
+			for (; index < index + 1; ) {
+				firstString[index] = firstResult;
+				break;
+			}
+			index++;
+			firstResult = 0;
+
+		}
+		int secondResult = 0;
+		int secondCounter = 0;
+		index = 0;
+
+		for (int k = 0; k < (arrLength1 + arrLength2 + 1); k++, index++) {
+			while (firstString[index] == 333) { k++; index++; }
+			secondResult = endResult[k] + firstString[index] + secondCounter;
+			secondCounter = 0;
+			while (secondResult >= 10) {
+				secondResult -= 10;
+				secondCounter++;
+			}
+			endResult[k] = secondResult;
+
+		}
+
+		firstString[indForLabel] = 333;
+		indForLabel++;
+		index = 0;
+	}
+	for (int i = arrLength1 + arrLength2; i >= 0; i--) {
+		if (endResult[i] == 0) i--;
+		cout << endResult[i] << " ";
+	}
+	
+}
+
+int main() {
+	long long a;
+	long long b;
+
+	cout << "Enter first number: ";
+	cin >> a;
+	cout << "Enrter second number: ";
+	cin >> b;
+
+	longMultiplication(a, b);
+}
