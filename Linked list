@@ -1,0 +1,133 @@
+#include <iostream>
+using namespace std;
+
+struct myStruct {
+    string val;
+    myStruct* next;
+
+    myStruct(string _val) : val(_val), next(nullptr) {}
+};
+
+struct list {
+    myStruct* first;
+    myStruct* last;
+
+    list() : first(nullptr), last(nullptr) {}
+
+    bool empty() {
+        return first == nullptr;
+    }
+
+    void push_back(std::string _val) {
+        myStruct* p = new myStruct(_val);
+        if (empty()) {
+            first = p;
+            last = p;
+            return;
+        }
+        last->next = p;
+        last = p;
+    }
+
+    void push_front(string _val) {
+        myStruct* p = new myStruct(_val);
+        if (empty()) {
+            first = p;
+            return;
+        }
+        p->next = first;
+        first = p;
+    }
+
+    void display() {
+        if (empty()) {
+            cout << "Empty.\n";
+            return;
+        }
+       
+        myStruct* p = first;
+        while (p) {
+            cout << p->val << " ";
+            p = p->next;
+        }
+        cout << "\n______________________________\n";
+
+    }
+
+    void remove(string _val) {
+        if (empty()) {
+            cout << "Linked list empty.";
+            return;
+        }
+        if (first->val == _val) {
+            myStruct* p = first;
+            first = p->next;
+            delete p;
+            return;
+        }
+        myStruct* firstRemove = first;
+        myStruct* second = first->next;
+        while (second && second->val != _val) {
+            firstRemove = firstRemove->next;
+            second = second->next;
+        }
+        if (!second) {
+            cout << "Error! This item does not exist" << endl;
+            return;
+        }
+        firstRemove->next = second->next;
+        delete second;
+    }
+
+    void insert(string _val, string alts) {
+        myStruct* q = new myStruct(_val);
+        myStruct* p = first;
+        while (p->val != alts)
+            p = p->next;
+        if (p->val == alts) {
+            p->next = q;
+            q->next = ;
+            return;
+        }
+    }
+};
+
+int main()
+{
+    list linkedList;
+
+    while (true) {
+        cout << "\nSelect item:\n" << "1. Push back item.\n" << "2. Push front item.\n" << "3. Remove item.\n" << "4. Insert item.\n" << "5. Show items.\n" << "65. End programm.\n" << "Your choice: ";
+        int choice;
+        cin >> choice;
+        cout << endl;
+        string valume;
+        string alts;
+
+        switch (choice) {
+        case 1:	
+            cout << "Enter your item: ";
+            cin >> valume;
+            linkedList.push_back(valume); break;
+        case 2:
+            cout << "Enter your item: ";
+            cin >> valume;
+            linkedList.push_front(valume); break;
+        case 3:	
+            cout << "Enter your item: ";
+            cin >> valume;
+            linkedList.remove(valume); break;
+        case 4:
+            cout << "Enter the item you want to insert: ";
+            cin >> valume;
+            cout << "Insert the element after which you want to insert: ";
+            cin >> alts;
+            linkedList.insert(valume, alts);
+        case 5:	linkedList.display(); break;
+        case 6:return 0; break;
+        default: cout << "Not in range.\n" << endl;
+        }
+    }
+
+  
+}
