@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+struct myMMax
+{
+	int newMax = 0;
+
+	template <typename T>
+	void myMax(int s, T val)
+	{
+		if (val > newMax) newMax = val;
+		cout << newMax;
+	}
+
+
+	template <typename T, typename... Args>
+	void myMax(int s, T val, Args... args)
+	{
+
+		if (newMax == 0) newMax = s;
+
+		if (val > newMax) newMax = val;
+
+		myMax(s, args...);
+	}
+};
+
+
+int main()
+{
+	myMMax ptr;
+
+	ptr.myMax(12, 56, 88, 6666, 11, 10, 90, 5000);
+}
