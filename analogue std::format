@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct analogueFormat
+{
+	int i = 0;
+	int percent = 0;
+	int lengthPercent = 0;
+
+	void percentLength(string str)
+	{
+		for (int j = 0; j < str.size();j++)
+		{
+			if (str[j] == '%') { percent++; }
+		}
+	}
+	
+
+	template <typename T>
+	void analogue(string str, T val)
+	{
+		if (lengthPercent == percent)
+		{
+			cout << val;
+			percent++;
+		}
+	}
+
+
+	template <typename T, typename... Args>
+	void analogue(string str, T val, Args... args)
+	{
+		if(percent==0)
+		{
+			percentLength(str);
+		}
+		
+		for (; i < str.size(); i++)
+		{
+			if (str[i] == '%') {
+				
+				str.erase(i, 1);
+
+				if(lengthPercent != percent-1)
+				{
+					cout << val;
+				}
+				lengthPercent++;
+				analogue(str, args...);
+				
+			}
+			if(i!=str.size()-1)
+			{
+				cout << str[i];
+			}
+		}
+	}
+};
+
+int main()
+{
+	analogueFormat ptr;
+
+	ptr.analogue("I got % % from % % fdsfdsf % tt %", 3, "apples", "Ivan", 23.1, "ooooooO", "bb");
+}
