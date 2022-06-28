@@ -1,0 +1,80 @@
+#include <iostream>
+#include <map>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+void sortTheText(string str)
+{
+	map<string, int> _str, _strPopular;
+	stringstream ss(str);
+	string s;
+	while (ss >> s)
+	{
+
+		if (_str.find(s) == _str.end())
+		{
+			_str.emplace(s, 1);
+		}
+		else {
+			_str[s]++;
+		}
+	}
+
+	int max = 1;
+
+	for (auto& val : _str)
+	{
+		if (val.second >= max) max = val.second;
+	}
+
+	for (auto val = _str.begin(); val != _str.end(); val++)
+	{
+		for (auto& val : _str)
+		{
+			if (val.second == max)
+			{
+				cout << val.first << " " << val.second << endl;
+			}
+		}
+		max--;
+	}
+	
+	_str.clear();
+
+}
+
+void readAndSortText()
+{
+	ifstream in("C:\\file from popular.txt");
+
+	string line;
+	string str;
+
+	while (getline(in, line))
+	{
+		str += line;
+	}
+
+	char arr[] = { '.', ',', '?', '!', ':', ';', '"'};
+	
+	for(int i=0;i<str.size();i++)
+	{
+		for(int j=0;j<7;j++)
+		{
+			if (str[i] == arr[j])
+			{
+				str.erase(i, 1);
+			}
+		}
+	}
+	sortTheText(str);
+	in.close();
+}
+
+int main()
+{
+	readAndSortText();
+}
